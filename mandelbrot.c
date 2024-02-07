@@ -6,15 +6,34 @@
 /*   By: trosinsk <trosinsk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 19:50:48 by trosinsk          #+#    #+#             */
-/*   Updated: 2024/02/06 20:20:15 by trosinsk         ###   ########.fr       */
+/*   Updated: 2024/02/07 16:04:15 by trosinsk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
 
-double	map_value(t_fractol *mandel, u_int32_t x, uint32_t y)
+static void	mandel_init(t_fractol *mandel, u_int32_t x, uint32_t y)
 {
-	mandel->real = (maxAllowed - minAllowed) * (unscaledNum - min) / (max - min) + minAllowed;
+	mandel->real = mandel->x_min + (double)x
+		/ mandel->img->width * (mandel->x_max - mandel ->x_min);
+	mandel->imag = mandel->y_min + (double)y
+		/ mandel->img->height * (mandel->y_max - mandel ->y_min);
+	mandel ->c_real = mandel ->real;
+	mandel ->c_imag = mandel ->imag;
+	mandel ->iter = 0;
+	mandel ->z_real = 0.0;
+	mandel ->z_imag = 0.0;
+}
+
+static void	next_iter(t_fractol *mandel)
+{
+	double	temp;
+
+	temp = mandel->z_real * mandel->z_real
+		- mandel->z_imag * mandel->z_imag + mandel ->c_real;
+	mandel->z_imag = 2.0 * mandel->z_real * mandel->z_imag + mandel->c_imag;
+	mandel->z_real = temp;
+	mandel->iter++;
 }
 
 void	ft_mandelbrot(void *param)
@@ -32,16 +51,16 @@ void	ft_mandelbrot(void *param)
 		x = 0;
 		while (++x < mandel->img->width)
 		{
-			map_value(mandel, x, y);
+			mandel_init(mandel, x, y);
 			while (mandel->iter < MAXITERATIONS && mandel->z_real
 				* mandel->z_real + mandel->z_imag * mandel->z_imag <= 4.0)
 			{
-				// updt_value(m);function to itertate thru pixels to drawn a pictures TODO
+				next_iter(mandel);
 			}
-			mandel->color = ft_pixel(mandel->iter % 128, mandel->iter % 64,
-					mandel->iter % 255, 255);
+			mandel->color = map(mandel);
 			mlx_put_pixel(mandel->img, x, y, mandel->color);
 		}
 	}
 	mandel->draw = 0;
 }
+//dodac zroznicowanie kolorow

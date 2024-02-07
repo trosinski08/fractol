@@ -6,7 +6,7 @@
 /*   By: trosinsk <trosinsk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 12:32:19 by trosinsk          #+#    #+#             */
-/*   Updated: 2024/02/06 19:48:12 by trosinsk         ###   ########.fr       */
+/*   Updated: 2024/02/07 21:07:32 by trosinsk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 # define FRACTOL_H
 
 # include "../../MLX42/include/MLX42/MLX42.h"
-# include "libft/libft.h" 
+# include "libft/libft.h"
+# include "printf/ft_printf.h" 
 # include <errno.h>
 # include <math.h>
 # include <stdbool.h>
@@ -70,6 +71,18 @@ typedef struct s_fractol
 	int			draw;
 }				t_fractol;
 
-int	get_rgba(int r, int g, int b, int a);
+//   utils
+int		get_rgba(int r, int g, int b, int a);
+void	ft_error(void);
+double	map(t_fractol *mandel);
+//mandelbrot
+void	ft_mandelbrot(void *param);
+//julia
+void	ft_julia(void *param);
+//atod
+double	ft_atod(char *str);
+//hook event
+void	my_keyhook(mlx_key_data_t keydata, void *param);
+void	scroll_func(double xdelta, double ydelta, void *param);
 
 #endif

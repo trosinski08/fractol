@@ -6,64 +6,79 @@
 /*   By: trosinsk <trosinsk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 12:32:51 by trosinsk          #+#    #+#             */
-/*   Updated: 2024/02/06 19:49:10 by trosinsk         ###   ########.fr       */
+/*   Updated: 2024/02/07 21:35:34 by trosinsk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
 #include "../../MLX42/include/MLX42/MLX42.h"
-#define BPP sizeof (int32_t)
 
-// Exit the program as failure.
-static void	ft_error(void)
+bool	img_control(t_fractol *mandel, mlx_t *mlx)
 {
-	fprintf(stderr, "%s", mlx_strerror(mlx_errno));
-	exit(EXIT_FAILURE);
+	if (!mlx)
+		ft_error();
+	mandel->img = mlx_new_image(mlx, WIDTH, HEIGHT);
+	if (!mandel->img || (mlx_image_to_window(mlx, mandel->img, 0, 0) < 0))
+	{
+		mlx_close_window(mlx);
+		ft_error();
+	}
+	if (mlx_image_to_window(mlx, mandel->img, 0, 0) == -1)
+	{
+		mlx_close_window(mlx);
+		ft_error();
+	}
+	return (1);
 }
 
-// Print the window width and height.
-// static void	ft_hook(void *param)
-// {
-// 	const mlx_t *mlx = param;
-
-// 	printf("WIDTH: %d | HEIGHT: %d\n", mlx->width, mlx->height);
-// }
-
-	// MLX allows you to define its core behaviour before startup.
-	/* Do stuff */
-
-	// Create and display the image.
-	// Even after the image is being displayed, we can still modify the buffer.
-	// Register a hook and pass mlx as an optional param.
-	// NOTE: Do this before calling mlx_loop!
+void	fractol_init(t_fractol *mandel, mlx_t *mlx, char **argv)
+{
+	mandel->draw = 1;
+	if (argv[1][0] == 'm')
+	{
+		mandel->x_min = -2.0;
+		mandel->x_max = 1.0;
+		mandel->y_min = -1.5;
+		mandel->y_max = 1.5;
+		mlx_loop_hook(mlx, ft_mandelbrot, mandel);
+	}
+	else if (argv[1][0] == 'j')
+	{
+		mandel->x_min = -1.5;
+		mandel->x_max = 1.5;
+		mandel->y_min = -1.5;
+		mandel->y_max = 1.5;
+		mandel->c_real = ft_atod(argv[2]);
+		mandel->c_imag = ft_atod(argv[3]);
+		mlx_loop_hook(mlx, ft_julia, mandel);
+	}
+	else
+	{
+		write(1, "param error", 1);
+		exit (0);
+	}
+}
 
 int32_t	main(int argc, char **argv)
 {
 	mlx_t		*mlx;
-	mlx_image_t	*img;
+	t_fractol	*mandel;
 
 	if ((argc == 2 && (ft_strncmp(argv[1], "mandelbrot", 10) == 0))
-		|| (argc == 5 && (ft_strncmp(argv[4], "julia", 5) == 0)))
+		|| (argc == 4 && (ft_strncmp(argv[1], "julia", 5) == 0)))
 	{
-		// ft_putstr_fd("jest OK!", 1);
-		mlx_set_setting(MLX_STRETCH_IMAGE, true);
 		mlx = mlx_init(WIDTH, HEIGHT, "MLX42", true);
-		if (!mlx)
-			ft_error();
-
-		img = mlx_new_image(mlx, WIDTH, HEIGHT);
-		if (!img || (mlx_image_to_window(mlx, img, 0, 0) < 0))
-			ft_error();
-
-		mlx_put_pixel(img, 0, 0, 0xFF0000FF);
-		ft_memset(img->pixels, 255, img->width * img->height * BPP);
-		mlx_image_to_window(mlx, img, 0, 0);
-
-		// mlx_loop_hook(mlx, ft_hook, mlx);
-		mlx_loop(mlx);
-		mlx_delete_image(mlx, img);
-		mlx_terminate(mlx);
-		return (EXIT_SUCCESS);
+		mandel = (t_fractol *)malloc(sizeof(t_fractol));
+		if (img_control(mandel, mlx) && mandel)
+		{
+			mlx_scroll_hook(mlx, scroll_func, mandel);
+			fractol_init(mandel, mlx, argv);
+			mlx_key_hook(mlx, my_keyhook, NULL);
+			mlx_loop(mlx);
+			mlx_terminate(mlx);
+			return (EXIT_SUCCESS);
+		}
+		free(mandel);
 	}
 	else
 	{
