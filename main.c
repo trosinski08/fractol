@@ -6,7 +6,7 @@
 /*   By: trosinsk <trosinsk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 12:32:51 by trosinsk          #+#    #+#             */
-/*   Updated: 2024/02/07 21:35:34 by trosinsk         ###   ########.fr       */
+/*   Updated: 2024/02/08 23:27:47 by trosinsk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,26 +31,22 @@ bool	img_control(t_fractol *mandel, mlx_t *mlx)
 	return (1);
 }
 
-void	fractol_init(t_fractol *mandel, mlx_t *mlx, char **argv)
+void	f_init(t_fractol *m, mlx_t *mlx, char **argv)
 {
-	mandel->draw = 1;
+	m->draw = 1;
 	if (argv[1][0] == 'm')
 	{
-		mandel->x_min = -2.0;
-		mandel->x_max = 1.0;
-		mandel->y_min = -1.5;
-		mandel->y_max = 1.5;
-		mlx_loop_hook(mlx, ft_mandelbrot, mandel);
+		mandel_init(m, mlx);
 	}
 	else if (argv[1][0] == 'j')
 	{
-		mandel->x_min = -1.5;
-		mandel->x_max = 1.5;
-		mandel->y_min = -1.5;
-		mandel->y_max = 1.5;
-		mandel->c_real = ft_atod(argv[2]);
-		mandel->c_imag = ft_atod(argv[3]);
-		mlx_loop_hook(mlx, ft_julia, mandel);
+		m->c_real = ft_atod(argv[2]);
+		m->c_imag = ft_atod(argv[3]);
+		julia_init(m, mlx);
+	}
+	else if (argv[1][0] == 'n')
+	{
+		newton_init(m, mlx);
 	}
 	else
 	{
@@ -59,23 +55,29 @@ void	fractol_init(t_fractol *mandel, mlx_t *mlx, char **argv)
 	}
 }
 
+void	performer(t_fractol *mandel, mlx_t *mlx, char **argv)
+{
+	mlx_scroll_hook(mlx, scroll_func, mandel);
+	f_init(mandel, mlx, argv);
+	mlx_key_hook(mlx, my_keyhook, mandel);
+	mlx_loop(mlx);
+	mlx_terminate(mlx);
+}
+
 int32_t	main(int argc, char **argv)
 {
 	mlx_t		*mlx;
 	t_fractol	*mandel;
 
-	if ((argc == 2 && (ft_strncmp(argv[1], "mandelbrot", 10) == 0))
+	if ((argc == 2 && ((ft_strncmp(argv[1], "mandelbrot", 10) == 0)
+				|| ft_strncmp(argv[1], "newton", 6) == 0))
 		|| (argc == 4 && (ft_strncmp(argv[1], "julia", 5) == 0)))
 	{
 		mlx = mlx_init(WIDTH, HEIGHT, "MLX42", true);
 		mandel = (t_fractol *)malloc(sizeof(t_fractol));
 		if (img_control(mandel, mlx) && mandel)
 		{
-			mlx_scroll_hook(mlx, scroll_func, mandel);
-			fractol_init(mandel, mlx, argv);
-			mlx_key_hook(mlx, my_keyhook, NULL);
-			mlx_loop(mlx);
-			mlx_terminate(mlx);
+			performer(mandel, mlx, argv);
 			return (EXIT_SUCCESS);
 		}
 		free(mandel);

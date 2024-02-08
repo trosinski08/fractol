@@ -6,7 +6,7 @@
 /*   By: trosinsk <trosinsk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 12:32:19 by trosinsk          #+#    #+#             */
-/*   Updated: 2024/02/07 21:07:32 by trosinsk         ###   ########.fr       */
+/*   Updated: 2024/02/08 23:33:08 by trosinsk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@
 # define WIDTH 1080
 # define HEIGHT 1080
 # define MAXITERATIONS 1000
+# define EPSILON 0.000001
 
 // Zbiór kolorów
 # define BLACK 0x000000
@@ -53,6 +54,9 @@
 
 typedef struct s_fractol
 {
+	uint32_t	color;
+	mlx_image_t	*img;
+	mlx_t		*mlx;
 	double		x_min;
 	double		x_max;
 	double		y_min;
@@ -61,15 +65,24 @@ typedef struct s_fractol
 	double		imag;
 	double		c_real;
 	double		c_imag;
-	int			iter;
 	double		z_real;
 	double		z_imag;
 	double		z_retemp;
-	uint32_t	color;
-	mlx_image_t	*img;
-	mlx_t		*mlx;
+	int			iter;
 	int			draw;
+	int			x1;
+	int			x2;
+	int			x3;
+	int			y1;
+	int			y2;
+	int			y3;
 }				t_fractol;
+
+typedef struct s_point
+{
+	int	x;
+	int	y;
+}				t_point;
 
 //   utils
 int		get_rgba(int r, int g, int b, int a);
@@ -77,12 +90,20 @@ void	ft_error(void);
 double	map(t_fractol *mandel);
 //mandelbrot
 void	ft_mandelbrot(void *param);
+void	mandel_init(t_fractol *mandel, mlx_t *mlx);
 //julia
+void	julia_init(t_fractol *mandel, mlx_t *mlx);
 void	ft_julia(void *param);
 //atod
 double	ft_atod(char *str);
 //hook event
 void	my_keyhook(mlx_key_data_t keydata, void *param);
 void	scroll_func(double xdelta, double ydelta, void *param);
+//bonus
+void	newton_init(t_fractol *newton, mlx_t *mlx);
+void	ft_newton(void *param);
+// void	sierpinski_init(t_fractol *sierp, mlx_t *mlx);
+// void	sierpinski_init(t_fractol *sierp);
+// void	ft_sierpinski(void *param);
 
 #endif

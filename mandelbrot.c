@@ -6,13 +6,22 @@
 /*   By: trosinsk <trosinsk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 19:50:48 by trosinsk          #+#    #+#             */
-/*   Updated: 2024/02/07 16:04:15 by trosinsk         ###   ########.fr       */
+/*   Updated: 2024/02/08 15:30:51 by trosinsk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
 
-static void	mandel_init(t_fractol *mandel, u_int32_t x, uint32_t y)
+void	mandel_init(t_fractol *mandel, mlx_t *mlx)
+{
+	mandel->x_min = -2.0;
+	mandel->x_max = 1.0;
+	mandel->y_min = -1.5;
+	mandel->y_max = 1.5;
+	mlx_loop_hook(mlx, ft_mandelbrot, mandel);
+}
+
+static void	mandelbroting(t_fractol *mandel, u_int32_t x, uint32_t y)
 {
 	mandel->real = mandel->x_min + (double)x
 		/ mandel->img->width * (mandel->x_max - mandel ->x_min);
@@ -51,7 +60,7 @@ void	ft_mandelbrot(void *param)
 		x = 0;
 		while (++x < mandel->img->width)
 		{
-			mandel_init(mandel, x, y);
+			mandelbroting(mandel, x, y);
 			while (mandel->iter < MAXITERATIONS && mandel->z_real
 				* mandel->z_real + mandel->z_imag * mandel->z_imag <= 4.0)
 			{

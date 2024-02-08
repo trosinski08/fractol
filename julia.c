@@ -6,11 +6,20 @@
 /*   By: trosinsk <trosinsk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 14:43:48 by trosinsk          #+#    #+#             */
-/*   Updated: 2024/02/07 17:48:22 by trosinsk         ###   ########.fr       */
+/*   Updated: 2024/02/08 20:19:03 by trosinsk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
+
+void	julia_init(t_fractol *mandel, mlx_t *mlx)
+{
+	mandel->x_min = -1.5;
+	mandel->x_max = 1.5;
+	mandel->y_min = -1.5;
+	mandel->y_max = 1.5;
+	mlx_loop_hook(mlx, ft_julia, mandel);
+}
 
 int	julia(float zr, float zi, float cr, float ci)
 {
