@@ -6,16 +6,11 @@
 /*   By: trosinsk <trosinsk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 19:21:01 by trosinsk          #+#    #+#             */
-/*   Updated: 2024/02/08 14:46:54 by trosinsk         ###   ########.fr       */
+/*   Updated: 2024/02/10 01:38:51 by trosinsk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
-
-int	get_rgba(int r, int g, int b, int a)
-{
-	return (r << 24 | g << 16 | b << 8 | a);
-}
 
 void	ft_error(void)
 {
@@ -25,7 +20,10 @@ void	ft_error(void)
 
 double	map(t_fractol *mandel)
 {
-	return ((BLACK - SKYBLUE) * mandel->iter / MAXITERATIONS + SKYBLUE);
+	double	color;
+
+	color = (BLACK - WHITE) * mandel->iter / MAXITERATIONS + WHITE;
+	return (color);
 }
 // BLACK 0x000000
 // WHITE 0xFFFFFF

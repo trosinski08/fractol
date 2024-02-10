@@ -6,7 +6,7 @@
 /*   By: trosinsk <trosinsk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 16:39:36 by trosinsk          #+#    #+#             */
-/*   Updated: 2024/02/08 14:49:20 by trosinsk         ###   ########.fr       */
+/*   Updated: 2024/02/10 00:43:40 by trosinsk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,25 +41,39 @@ void	my_keyhook(mlx_key_data_t keydata, void *param)
 	mandel->draw = 1;
 }
 
+void	cursor_zooming(t_fractol *mandel, double xpos, double ypos, double a)
+{
+	mandel->x_max = xpos + (mandel->x_max - xpos) * a;
+	mandel->y_max = ypos + (mandel->y_max - ypos) * a;
+	mandel->x_min = xpos + (mandel->x_min - xpos) * a;
+	mandel->y_min = ypos + (mandel->y_min - ypos) * a;
+}
+
 void	scroll_func(double xdelta, double ydelta, void *param)
 {
 	t_fractol	*mandel;
+	float		xpos;
+	float		ypos;
+	double		a;
 
 	mandel = (t_fractol *)param;
 	xdelta = 0.0;
+	xpos = 0;
+	ypos = 0;
+	a = 0;
+	mlx_get_mouse_pos(mandel->mlx, &mandel->x_pos, &mandel->y_pos);
+	if (mandel->x_pos >= 0 && mandel->x_pos < (int32_t)mandel->img->width
+		&& mandel->y_pos >= 0 && mandel->y_pos < (int32_t)mandel->img->height)
+	{
+		xpos = (double)mandel->x_pos * (mandel->x_max - mandel->x_min)
+			/ (double)WIDTH + mandel->x_min;
+		ypos = (double)mandel->y_pos * (mandel->y_max - mandel->y_min)
+			/ (double)HEIGHT + mandel->y_min;
+	}
 	if (ydelta > 0)
-	{
-		mandel->x_max -= (mandel->x_max - mandel->x_min) * 0.1;
-		mandel->y_max -= (mandel->y_max - mandel->y_min) * 0.1;
-		mandel->x_min += (mandel->x_max - mandel->x_min) * 0.1;
-		mandel->y_min += (mandel->y_max - mandel->y_min) * 0.1;
-	}
+		a = 0.9;
 	else if (ydelta < 0)
-	{
-		mandel->x_max += (mandel->x_max - mandel->x_min) * 0.1;
-		mandel->y_max += (mandel->y_max - mandel->y_min) * 0.1;
-		mandel->x_min -= (mandel->x_max - mandel->x_min) * 0.1;
-		mandel->y_min -= (mandel->y_max - mandel->y_min) * 0.1;
-	}
+		a = 1.1;
+	cursor_zooming(mandel, xpos, ypos, a);
 	mandel->draw = 1;
 }

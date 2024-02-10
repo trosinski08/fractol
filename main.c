@@ -6,7 +6,7 @@
 /*   By: trosinsk <trosinsk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 12:32:51 by trosinsk          #+#    #+#             */
-/*   Updated: 2024/02/08 23:27:47 by trosinsk         ###   ########.fr       */
+/*   Updated: 2024/02/09 18:55:08 by trosinsk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ int32_t	main(int argc, char **argv)
 	{
 		mlx = mlx_init(WIDTH, HEIGHT, "MLX42", true);
 		mandel = (t_fractol *)malloc(sizeof(t_fractol));
+		mandel->mlx = mlx;
 		if (img_control(mandel, mlx) && mandel)
 		{
 			performer(mandel, mlx, argv);

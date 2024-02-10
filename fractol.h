@@ -6,7 +6,7 @@
 /*   By: trosinsk <trosinsk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 12:32:19 by trosinsk          #+#    #+#             */
-/*   Updated: 2024/02/08 23:33:08 by trosinsk         ###   ########.fr       */
+/*   Updated: 2024/02/10 01:45:06 by trosinsk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,8 @@
 typedef struct s_fractol
 {
 	uint32_t	color;
+	int32_t		x_pos;
+	int32_t		y_pos;
 	mlx_image_t	*img;
 	mlx_t		*mlx;
 	double		x_min;
@@ -99,6 +101,8 @@ double	ft_atod(char *str);
 //hook event
 void	my_keyhook(mlx_key_data_t keydata, void *param);
 void	scroll_func(double xdelta, double ydelta, void *param);
+//bonus_utils.c
+void	cursor_zooming(t_fractol *mandel, double xpos, double ypos, double a);
 //bonus
 void	newton_init(t_fractol *newton, mlx_t *mlx);
 void	ft_newton(void *param);

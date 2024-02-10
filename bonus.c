@@ -6,7 +6,7 @@
 /*   By: trosinsk <trosinsk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 15:01:56 by trosinsk          #+#    #+#             */
-/*   Updated: 2024/02/08 23:31:50 by trosinsk         ###   ########.fr       */
+/*   Updated: 2024/02/09 14:16:15 by trosinsk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,23 +75,27 @@ void	newton_init(t_fractol *newton, mlx_t *mlx)
 
 static void	newton_iteration(t_fractol *newton, uint32_t x, uint32_t y)
 {
-	double dx = (newton->x_max - newton->x_min) / newton->img->width;
-	double dy = (newton->y_max - newton->y_min) / newton->img->height;
+	double	dx;
+	double	dy;
+	double	z_real;
+	double	z_imag;
+
+	dx = (newton->x_max - newton->x_min) / newton->img->width;
+	dy = (newton->y_max - newton->y_min) / newton->img->height;
 	newton->real = newton->x_min + x * dx;
 	newton->imag = newton->y_min + y * dy;
 	newton->iter = 0;
-	double z_real = newton->real;
-	double z_imag = newton->imag;
-
+	z_real = newton->real;
+	z_imag = newton->imag;
 	while (newton->iter < MAXITERATIONS)
 	{
-		double dz_real = (z_real * z_real - z_imag * z_imag + newton->c_real) /
-			(2 * z_real);
-		double dz_imag = (2 * z_real * z_imag + newton->c_imag) / (2 * z_real);
-		z_real -= dz_real;
-		z_imag -= dz_imag;
-		if (fabs(dz_real) < EPSILON && fabs(dz_imag) < EPSILON)
-			break;
+		dx = (z_real * z_real - z_imag * z_imag + newton->c_real)
+			/ (2 * z_real);
+		dy = (2 * z_real * z_imag + newton->c_imag) / (2 * z_real);
+		z_real -= dx;
+		z_imag -= dy;
+		if (fabs(dx) < EPSILON && fabs(dy) < EPSILON)
+			break ;
 		newton->iter++;
 	}
 }

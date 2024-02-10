@@ -6,7 +6,7 @@
 /*   By: trosinsk <trosinsk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 19:50:48 by trosinsk          #+#    #+#             */
-/*   Updated: 2024/02/08 15:30:51 by trosinsk         ###   ########.fr       */
+/*   Updated: 2024/02/10 01:46:46 by trosinsk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,4 +72,3 @@ void	ft_mandelbrot(void *param)
 	}
 	mandel->draw = 0;
 }
-//dodac zroznicowanie kolorow
