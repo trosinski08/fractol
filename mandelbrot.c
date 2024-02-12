@@ -6,7 +6,7 @@
 /*   By: trosinsk <trosinsk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 19:50:48 by trosinsk          #+#    #+#             */
-/*   Updated: 2024/02/10 01:46:46 by trosinsk         ###   ########.fr       */
+/*   Updated: 2024/02/11 00:14:36 by trosinsk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void	ft_mandelbrot(void *param)
 		while (++x < mandel->img->width)
 		{
 			mandelbroting(mandel, x, y);
-			while (mandel->iter < MAXITERATIONS && mandel->z_real
+			while (mandel->iter < mandel->max_iter && mandel->z_real
 				* mandel->z_real + mandel->z_imag * mandel->z_imag <= 4.0)
 			{
 				next_iter(mandel);

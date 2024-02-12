@@ -6,16 +6,15 @@
 /*   By: trosinsk <trosinsk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 12:32:19 by trosinsk          #+#    #+#             */
-/*   Updated: 2024/02/10 01:45:06 by trosinsk         ###   ########.fr       */
+/*   Updated: 2024/02/11 12:43:14 by trosinsk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FRACTOL_H
 # define FRACTOL_H
 
-# include "../../MLX42/include/MLX42/MLX42.h"
+# include "./MLX42/include/MLX42/MLX42.h"
 # include "libft/libft.h"
-# include "printf/ft_printf.h" 
 # include <errno.h>
 # include <math.h>
 # include <stdbool.h>
@@ -23,11 +22,12 @@
 # include <stdlib.h>
 # include <unistd.h>
 
-# define ERROR_MESSAGE "tutaj walniemy jakis error message"
+# define ERROR_MESSAGE "Error!\nEnter:\n./fractol mandelbrot\nor ./fractol"
+# define ERROR_MESSAGE1 " julia \t<param1> \t<param2>\nor ./fractol newton"
 # define WIDTH 1080
 # define HEIGHT 1080
 # define MAXITERATIONS 1000
-# define EPSILON 0.000001
+# define EPSILON 0.00000001
 
 // Zbiór kolorów
 # define BLACK 0x000000
@@ -71,25 +71,26 @@ typedef struct s_fractol
 	double		z_imag;
 	double		z_retemp;
 	int			iter;
+	int			max_iter;
 	int			draw;
-	int			x1;
-	int			x2;
-	int			x3;
-	int			y1;
-	int			y2;
-	int			y3;
+	int			x;
+	int			y;
+	float		tolerance;
+	char		*name;
 }				t_fractol;
 
-typedef struct s_point
+typedef struct s_complex
 {
-	int	x;
-	int	y;
-}				t_point;
+	long double		x;
+	long double		y;
+}				t_complex;
 
 //   utils
-int		get_rgba(int r, int g, int b, int a);
 void	ft_error(void);
 double	map(t_fractol *mandel);
+double	map2(t_fractol *mandel, double xpos);
+double	map3(t_fractol *mandel, double ypos);
+void	instruction(void);
 //mandelbrot
 void	ft_mandelbrot(void *param);
 void	mandel_init(t_fractol *mandel, mlx_t *mlx);
@@ -101,13 +102,11 @@ double	ft_atod(char *str);
 //hook event
 void	my_keyhook(mlx_key_data_t keydata, void *param);
 void	scroll_func(double xdelta, double ydelta, void *param);
+void	julia_dynamic(double xpos, double ypos, void *param);
 //bonus_utils.c
 void	cursor_zooming(t_fractol *mandel, double xpos, double ypos, double a);
 //bonus
 void	newton_init(t_fractol *newton, mlx_t *mlx);
 void	ft_newton(void *param);
-// void	sierpinski_init(t_fractol *sierp, mlx_t *mlx);
-// void	sierpinski_init(t_fractol *sierp);
-// void	ft_sierpinski(void *param);
 
 #endif
