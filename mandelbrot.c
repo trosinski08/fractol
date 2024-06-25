@@ -6,7 +6,7 @@
 /*   By: trosinsk <trosinsk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 19:50:48 by trosinsk          #+#    #+#             */
-/*   Updated: 2024/02/11 00:14:36 by trosinsk         ###   ########.fr       */
+/*   Updated: 2024/06/26 00:15:45 by trosinsk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void	ft_mandelbrot(void *param)
 			{
 				next_iter(mandel);
 			}
-			mandel->color = map(mandel);
+			mandel->color = pixel_clr(mandel, mandel->iter);
 			mlx_put_pixel(mandel->img, x, y, mandel->color);
 		}
 	}

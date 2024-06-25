@@ -6,7 +6,7 @@
 /*   By: trosinsk <trosinsk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 02:43:53 by trosinsk          #+#    #+#             */
-/*   Updated: 2024/02/11 02:46:44 by trosinsk         ###   ########.fr       */
+/*   Updated: 2024/04/23 21:40:46 by trosinsk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,9 @@ void	julia_dynamic(double xpos, double ypos, void *param)
 		&& (mandel->x_pos >= 0 && mandel->x_pos < (int32_t)mandel->img->width)
 		&& (mandel->y_pos >= 0 && mandel->y_pos < (int32_t)mandel->img->height))
 	{
-		mandel->c_real *= map2(mandel, xpos);
+		mandel->c_real = map2(mandel, xpos);
 		mandel->c_imag = map3(mandel, ypos);
+		printf("c_real = %f; c_imag = %f\n", mandel->c_real, mandel->c_imag);
 	}
 	mandel->draw = 1;
 }

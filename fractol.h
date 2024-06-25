@@ -6,7 +6,7 @@
 /*   By: trosinsk <trosinsk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 12:32:19 by trosinsk          #+#    #+#             */
-/*   Updated: 2024/02/11 12:43:14 by trosinsk         ###   ########.fr       */
+/*   Updated: 2024/06/25 23:38:12 by trosinsk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,7 @@ double	map(t_fractol *mandel);
 double	map2(t_fractol *mandel, double xpos);
 double	map3(t_fractol *mandel, double ypos);
 void	instruction(void);
+int		pixel_clr(t_fractol *mandel, int itr);
 //mandelbrot
 void	ft_mandelbrot(void *param);
 void	mandel_init(t_fractol *mandel, mlx_t *mlx);

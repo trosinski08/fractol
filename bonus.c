@@ -6,7 +6,7 @@
 /*   By: trosinsk <trosinsk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 15:01:56 by trosinsk          #+#    #+#             */
-/*   Updated: 2024/02/11 02:32:58 by trosinsk         ###   ########.fr       */
+/*   Updated: 2024/06/26 00:16:16 by trosinsk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,8 @@ void	ft_newton(void *param)
 		{
 			newton->iter = 0;
 			newton_iteration(newton, x, y);
-			newton->color = map(newton);
+			newton->color = pixel_clr(newton, newton->iter);
+			// newton->color = map(newton);
 			mlx_put_pixel(newton->img, x, y, newton->color);
 		}
 	}

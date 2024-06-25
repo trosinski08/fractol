@@ -6,7 +6,7 @@
 /*   By: trosinsk <trosinsk@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 14:43:48 by trosinsk          #+#    #+#             */
-/*   Updated: 2024/02/11 00:55:49 by trosinsk         ###   ########.fr       */
+/*   Updated: 2024/06/25 23:39:03 by trosinsk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,8 @@ void	ft_julia(void *param)
 				/ mandel->img->height * (mandel->y_max - mandel->y_min);
 			mandel->iter = julia(mandel->real,
 					mandel->imag, mandel->c_real, mandel->c_imag);
-			mandel->color = map(mandel);
+			// mandel->color = map(mandel);
+			mandel->color = pixel_clr(mandel, mandel->iter);
 			mlx_put_pixel(mandel->img, x, y, mandel->color);
 		}
 	}
