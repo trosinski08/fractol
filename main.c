@@ -12,6 +12,9 @@
 
 #include "fractol.h"
 #include "./MLX42/include/MLX42/MLX42.h"
+#ifdef __unix__
+#include <unistd.h>
+#endif
 
 bool	img_control(t_fractol *mandel, mlx_t *mlx)
 {
@@ -54,7 +57,7 @@ void	f_init(t_fractol *m, mlx_t *mlx, char **argv)
 	}
 	else
 	{
-		write(1, "Param error!", 12);
+		ft_putstr_fd("Param error!", 2);
 		exit (0);
 	}
 }

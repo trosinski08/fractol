@@ -13,19 +13,31 @@
 #ifndef FRACTOL_H
 # define FRACTOL_H
 
+# ifndef STDERR_FILENO
+#  define STDERR_FILENO 2
+# endif
+# ifndef STDOUT_FILENO
+#  define STDOUT_FILENO 1
+# endif
+# ifndef STDIN_FILENO
+#  define STDIN_FILENO 0
+# endif
+
 # include "./MLX42/include/MLX42/MLX42.h"
-# include "libft/libft.h"
+# include "./libft/include/libft.h"
 # include <errno.h>
 # include <math.h>
 # include <stdbool.h>
 # include <stdio.h>
 # include <stdlib.h>
-# include <unistd.h>
+# ifdef __unix__
+#  include <unistd.h>
+# endif
 
 # define ERROR_MESSAGE "Error!\nEnter:\n./fractol mandelbrot\nor ./fractol"
 # define ERROR_MESSAGE1 " julia \t<param1> \t<param2>\nor ./fractol newton"
-# define WIDTH 1080
-# define HEIGHT 1080
+# define WIDTH 7200
+# define HEIGHT 720
 # define MAXITERATIONS 1000
 # define EPSILON 0.00000001
 

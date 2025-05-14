@@ -28,7 +28,8 @@ void	scroll_func(double xdelta, double ydelta, void *param)
 	double		a;
 
 	mandel = (t_fractol *)param;
-	xdelta = 0.0;
+	if (xdelta) 
+		xdelta = 0.0;
 	xpos = 0;
 	ypos = 0;
 	a = 0;
@@ -61,7 +62,6 @@ void	julia_dynamic(double xpos, double ypos, void *param)
 	{
 		mandel->c_real = map2(mandel, xpos);
 		mandel->c_imag = map3(mandel, ypos);
-		printf("c_real = %f; c_imag = %f\n", mandel->c_real, mandel->c_imag);
 	}
 	mandel->draw = 1;
 }
