@@ -88,7 +88,20 @@ typedef struct s_fractol
 	int			x;
 	int			y;
 	float		tolerance;
-	char		*name;
+	char		*name;	// New members for effects
+	bool		effect_random_trigger;
+	bool		effect_psy_flow_active;
+	bool		effect_active; // Flag to indicate if any effect is active
+	float		psy_activity_status;
+	float		psy_time_factor;
+	float		random_time_factor; // Time factor for random animation
+	float		psy_spatial_factor_x;
+	float		psy_spatial_factor_y;
+	bool		color_cycling; // Flag for color cycling mode
+	float		color_cycle_speed; // Speed of color cycling
+	// Storing iteration counts for effects
+	int			*pixel_iterations; // Array to store iteration count for each pixel
+	int			iterations_max_value_at_render; // max_iter value when pixel_iterations was last updated
 }				t_fractol;
 
 typedef struct s_complex
@@ -121,5 +134,8 @@ void	cursor_zooming(t_fractol *mandel, double xpos, double ypos, double a);
 //bonus
 void	newton_init(t_fractol *newton, mlx_t *mlx);
 void	ft_newton(void *param);
+// Prototypes for new effect functions
+void	ft_randomize_effect(t_fractol *f);
+void	ft_psy_flow_effect(t_fractol *f);
 
 #endif

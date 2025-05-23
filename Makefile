@@ -1,7 +1,7 @@
 NAME	:= fractol
 CFLAGS	:= -Wextra -Wall -Werror -Wunreachable-code -Ofast -g #-fsanitize=address
 LIBMLX	:= ./MLX42
-SRCS 	:= main.c utils.c mandelbrot.c julia.c ft_atod.c mouse_hooks.c key_hooks.c bonus.c
+SRCS 	:= main.c utils.c mandelbrot.c julia.c ft_atod.c mouse_hooks.c key_hooks.c bonus.c effects.c
 LIBFT	:= ./libft
 
 HEADERS	:= -I ./include -I $(LIBMLX)/include

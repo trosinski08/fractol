@@ -96,7 +96,12 @@ void	ft_newton(void *param)
 			newton->color = pixel_clr(newton, newton->iter);
 			// newton->color = map(newton);
 			mlx_put_pixel(newton->img, x, y, newton->color);
+			// Store iteration count for this pixel
+			if (newton->pixel_iterations)
+				newton->pixel_iterations[y * WIDTH + x] = newton->iter;
 		}
 	}
+	// Update the max_iter value associated with the current pixel_iterations data
+	newton->iterations_max_value_at_render = newton->max_iter;
 	newton->draw = 0;
 }
