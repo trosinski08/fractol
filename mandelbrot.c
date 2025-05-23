@@ -21,7 +21,7 @@ void	mandel_init(t_fractol *mandel, mlx_t *mlx)
 	mlx_loop_hook(mlx, ft_mandelbrot, mandel);
 }
 
-static void	mandelbroting(t_fractol *mandel, u_int32_t x, uint32_t y)
+static void	mandelbroting(t_fractol *mandel, uint32_t x, uint32_t y)
 {
 	mandel->real = mandel->x_min + (double)x
 		/ mandel->img->width * (mandel->x_max - mandel ->x_min);

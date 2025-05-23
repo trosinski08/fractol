@@ -36,7 +36,7 @@
 
 # define ERROR_MESSAGE "Error!\nEnter:\n./fractol mandelbrot\nor ./fractol"
 # define ERROR_MESSAGE1 " julia \t<param1> \t<param2>\nor ./fractol newton"
-# define WIDTH 7200
+# define WIDTH 720
 # define HEIGHT 720
 # define MAXITERATIONS 1000
 # define EPSILON 0.00000001

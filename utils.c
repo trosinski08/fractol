@@ -66,6 +66,24 @@ int	pixel_clr(t_fractol *mandel, int itr)
 	return (0xFF << 24 | (int)blue << 16 | (int)green << 8 | (int)red);
 }
 
+// int	pixel_clr(t_fractol *mandel, int itr)
+// {
+//     int	red;
+//     int	green;
+//     int	blue;
+
+//     if (itr == 0)
+//         return (WHITE);
+//     if (itr == mandel->max_iter)
+//         return (BLACK);
+
+//     red = (itr * 7) % 256;
+//     green = (itr * 13) % 256;
+//     blue = (itr * 23) % 256;
+
+//     return (0xFF << 24 | blue << 16 | green << 8 | red);
+// }
+
 void	ft_error(void)
 {
 	ft_putstr_fd(ERROR_MESSAGE, 1);
